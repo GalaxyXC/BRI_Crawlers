@@ -1,0 +1,16 @@
+# Currently, only use git to manage crawler codes
+.idea/
+alan's files/
+contracts/
+lian/
+venv/
+
+bnef_export_count.txt
+
+# packages should be unzipped, or put into other folder, or deleted
+# alan's files.rar
+
+
+# ignore all spreadsheets for now
+**/*.xls
+**/*.xlsx
