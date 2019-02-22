@@ -14,3 +14,10 @@ bnef_export_count.txt
 # ignore all spreadsheets for now
 **/*.xls
 **/*.xlsx
+
+# ignore compiled python code
+**/*.pyc
+
+# ignore crawled results and log
+crawler/output.txt
+crawler/log.txt

@@ -8,7 +8,7 @@ USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " \
 
 def get_urls_from_page(page_url, mode):
     """
-    Calls get_urls_from_page(*) from utils.py
+    Calls get_urls_from_page(*)
     :param page_url: url of page
     :param mode: int
     :return: List[string], a list of urls
@@ -20,12 +20,16 @@ def get_urls_from_page(page_url, mode):
 def _get_urls_from_page0(page_url):
     # parsing YiDaiYiLuWang's news list
     html = get_html_from_url(page_url)
-    root = etree.XML(html)
-    li_elements = root.xpath()  # TODO
+    if not html:
+        print("Fail to retrieve urls from post list. ")
+        return []
+
+    root = etree.HTML(html)
+    a_elements = root.xpath("//ul[@class='commonList_dot']/li/a")
 
     urls_to_return = []
-    for li_element in li_elements:
-        urls_to_return.append(li_element.xpath())  # TODO
+    for a_element in a_elements:
+        urls_to_return.append(a_element.get('href'))
     return urls_to_return
 
 
@@ -39,4 +43,9 @@ def get_post_date_from_document(document, mode):
 
 
 def get_html_from_url(url):
-    return requests.get(url=url, headers={'user-agent':USER_AGENT}, params=None)
+    r = requests.get(url=url, headers={'user-agent':USER_AGENT}, params=None)
+    if r.status_code == 200:
+        r.encoding = 'UTF-8'
+        return r.text
+    else:
+        return ""
