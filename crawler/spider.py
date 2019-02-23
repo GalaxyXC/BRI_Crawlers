@@ -1,6 +1,6 @@
 import json
 import time
-import requests
+import datetime
 from lxml import etree
 
 from crawler.utils import *
@@ -56,28 +56,39 @@ class BeltRoadSpider:
         urls_to_return = []
         max_page, page_param_string = args
         if mode == 'BY_PAGE':
-            #page_urls = [domain+link+'&'+page_param_string+'='+str(i) for i in range(max_page)]
-            page_urls = [domain+link+'&'+page_param_string+'='+str(3)]
+            page_urls = [domain+link+'&'+page_param_string+'='+str(i) for i in range(1,max_page+1)][::-1]
+            #page_urls = [domain+link+'&'+page_param_string+'='+str(3)]
             for page in page_urls:
                 document_urls = get_urls_from_page(page, 0)
                 for document_url in document_urls:
-                    time.sleep(3)
+                    time.sleep(4)
                     document_html = get_html_from_url(domain+document_url)
                     if not document_html:
                         print(f"Fail to processed: {document_url}")
+                        with open("log.txt", "a", encoding="utf-8") as f:
+                            f.write("\n LOG: Fail to process: " + domain+document_url + "\n")
                         continue
 
                     root = etree.HTML(document_html)
-                    title = root.xpath("//div/h1[@class='main_content_title']")[0].text
-                    document_text = root.xpath("//div[@class='content']/div/p")
-                    document_string = " ".join([e.text for e in document_text])
+                    try:
+                        title = root.xpath("//div/h1[@class='main_content_title']")[0].text
+                        document_text = root.xpath("//div[@class='content']/div/p")
+                        document_string = " ".join([e.text for e in document_text])
+                    except Exception as e:
+                        with open("log.txt", "a", encoding="utf-8") as f:
+                            f.write(f"\n LOG: Exception: {e} while parsing {domain+document_url} \n")
+                        continue
 
-                    found_log = "not"
+                    found_log = "NOT "
                     if self._contains_BRI_country(title) or self._contains_BRI_country(document_string):
                         urls_to_return.append(domain+document_url)
-                        self.urls_to_return.append(domain+document_url)
+                        #self.urls_to_return.append(domain+document_url)
                         found_log = ""
-                    print(f"Processed: {title}({document_url}), keyword {found_log} found. ")
+                    print(f"Processed: {title}({document_url}), keyword {found_log}found. ")
+                with open("log.txt", "a", encoding="utf-8") as f:
+                    f.write("\n LOG: Crawled: "+page+"\n")
+                    f.write(f"{datetime.datetime.now()}\n")
+                    f.write("\n".join(urls_to_return))
 
         return urls_to_return
 
@@ -123,7 +134,6 @@ if __name__ == '__main__':
                                mode=crawl_mode, mode_int=crawl_mode_int, args=max_date)
 
     with open("output.txt", "w", encoding="utf-8") as f:
-        f.write("\n".join(spider.urls_to_return))
-    #with open("log.txt", "w", encoding="utf-8") as f:
-    #    f.write("\n".join(log))
-    print(f"LOG: Crawled {len(spider.urls_to_return)} links that contains BRI countries.")
+        f.write("\n".join(log))
+
+    print(f"LOG: Crawled {len(log)} links that contains BRI countries.")

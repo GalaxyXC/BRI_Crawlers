@@ -10,7 +10,7 @@
         "crawl_mode_int": 0,
         "mode": "BY_PAGE",
         "url_page_string": "cur_page",
-        "max_page": 1,
+        "max_page": 29,
         "max_date": null
       }
     }
