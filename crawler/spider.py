@@ -10,9 +10,10 @@ WEBSITE_FILE = "./static/websites.json"
 
 
 class BeltRoadSpider:
-    def __init__(self, bri_country_list, action_words, start_date):
-        self.bri_country_list = bri_country_list
-        self.action_words = action_words
+    def __init__(self, keywords_json_file, keywords_checklist, start_date):
+        with open(keywords_json_file, encoding="utf-8") as f:
+            self.keywords_json = json.load(f)
+        self.keywords_checklist = keywords_checklist
         self.start_date = start_date
         self.urls_to_return = []
 
@@ -56,12 +57,25 @@ class BeltRoadSpider:
         urls_to_return = []
         max_page, page_param_string = args
         if mode == 'BY_PAGE':
-            page_urls = [domain+link+'&'+page_param_string+'='+str(i) for i in range(1,max_page+1)][::-1]
-            #page_urls = [domain+link+'&'+page_param_string+'='+str(3)]
+            #page_urls = [domain+link+'&'+page_param_string+'='+str(i) for i in range(1,max_page+1)][::-1]
+            page_urls = [domain+link+'&'+page_param_string+'='+str(3)]
+            count = 0
             for page in page_urls:
-                document_urls = get_urls_from_page(page, 0)
+                #document_urls = get_urls_from_page(page, 0)
+
+                # TEMPORARY: re-crawl with new keywords
+                with open("crawler/log.txt", 'r') as f:
+                    tmp = f.read()
+                    tmp_links = tmp.split('\n')
+                    document_urls = tmp_links[810:]
+                # END TEMPORARY
+
                 for document_url in document_urls:
-                    time.sleep(4)
+                    # early stop       TODO <<< Cancel early stop when not in debug mode
+                    # count += 1
+                    # if count > 8:
+                    #     break
+                    time.sleep(3)
                     document_html = get_html_from_url(domain+document_url)
                     if not document_html:
                         print(f"Fail to processed: {document_url}")
@@ -80,7 +94,7 @@ class BeltRoadSpider:
                         continue
 
                     found_log = "NOT "
-                    if self._contains_BRI_country(title) or self._contains_BRI_country(document_string):
+                    if self._contains_all_keywords(title+document_string):
                         urls_to_return.append(domain+document_url)
                         #self.urls_to_return.append(domain+document_url)
                         found_log = ""
@@ -92,29 +106,26 @@ class BeltRoadSpider:
 
         return urls_to_return
 
-    def _contains_BRI_country(self, text):
+    def _contains_all_keywords(self, text):
         """
         :param text:
         :return: Boolean:
         """
-        found_action = False
-        for action in self.action_words:
-            if action in text:
-                found_action = True
-                break
-
-        if found_action:
-            for country in self.bri_country_list:
-                if country in text:
+        def _contains_keyword(keyword_group):
+            for keyword in self.keywords_json[keyword_group]:
+                if keyword in text:
                     return True
             return False
-        else:
-            return False
+
+        for keyword_group in self.keywords_checklist:
+            if not _contains_keyword(keyword_group):
+                return False
+        return True
+
 
 if __name__ == '__main__':
-    with open(KEYWORDS_FILE, encoding="utf-8") as f:
-        keywords = json.load(f)
-    spider = BeltRoadSpider(keywords["countries"], keywords["action"], None)
+    CHECKLIST = ["coal_keys", "countries", "action"]
+    spider = BeltRoadSpider(KEYWORDS_FILE, CHECKLIST , None)
 
     with open(WEBSITE_FILE, encoding="utf-8") as f:
         websites = json.load(f)
@@ -136,4 +147,4 @@ if __name__ == '__main__':
     with open("output.txt", "w", encoding="utf-8") as f:
         f.write("\n".join(log))
 
-    print(f"LOG: Crawled {len(log)} links that contains BRI countries.")
+    print(f"LOG: Crawled {len(log)} links that contains all keywords in {CHECKLIST}. ")
