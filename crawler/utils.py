@@ -98,7 +98,10 @@ def add_domain_by_year(file, year_prefix, year_suffix):
     with open("crawler/new_urls.txt", 'w') as f:
         f.write("\n".join(ret))
 
-
+def log(text):
+    with open("log.txt", 'a') as f:
+        f.write(text)
+    print(text)
 
 
 

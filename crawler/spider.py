@@ -138,15 +138,15 @@ class BeltRoadSpider:
 
         # Create url queues
         if not args["read_from_file"]:
-            document_urls = self.create_jobs(args)
+            jobs = self.create_jobs(args)
         else:
             with open(args["read_from_file"], 'r') as f:
-                document_urls = f.read().split('\n')
+                jobs = f.read().split('\n')
 
         # Consume url queues
         urls_to_return = []
         count = 0
-        for document_url in document_urls:
+        for document_url in jobs:
             count += 1
             if args["href_pattern"] == "contain_domain":
                 url = document_url
@@ -226,9 +226,7 @@ class BeltRoadSpider:
         print(f"{len(document_urls)} task urls stored in {file_name}.\n")
         with open("data/" + file_name, 'w') as f:
             f.write("\n".join(document_urls))
-
-
-
+        return document_urls
 
     def _contains_all_keywords(self, text):
         """
@@ -251,23 +249,24 @@ if __name__ == '__main__':
     CHECKLIST = ["coal_keys", "countries", "action"]
     # CHECKLIST = ["coal_keys", "action"]  # test command
     spider = BeltRoadSpider(FILE_DIR + KEYWORDS_FILE, CHECKLIST, None)
-    log = []
 
     with open(FILE_DIR + WEBSITE_FILE, encoding="utf-8") as f:
         websites = json.load(f)
 
+    urls = []
     for website in websites["crawling"]:
         if website["crawl"] == 0:
             continue
 
         params = website["data"]
-        params["read_from_file"] = "crawler/data/中国南方电网_job_urls.txt"
+        # Override with external job queue
+        params["read_from_file"] = "data/中国南方电网_job_urls.txt"
         # Override when read urls from file
         params['href_pattern'] = "contain_domain"
-        log = spider.crawl(mode_int=params["crawl_mode_int"], args=params)
+        urls = spider.crawl(mode_int=params["crawl_mode_int"], args=params)
 
         with open("data/" + params["name"].split(" ")[0] + "output.txt", "w", encoding="utf-8") as f:
-            f.write("\n".join(log))
+            f.write("\n".join(urls))
 
-    print(f"LOG: Crawled {len(log)} links that contains all keywords in {CHECKLIST}. ")
+    print(f"LOG: Crawled {len(urls)} links that contains all keywords in {CHECKLIST}. ")
 
