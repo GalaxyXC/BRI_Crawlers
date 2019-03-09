@@ -1,31 +1,267 @@
 {
-  "_comments": "",
+  "_comments": [
+    "TODO: 国开行 - crawler",
+    "TODO： 中国电力建设集团 - new mode for crawl search results",
+    "TODO: CEIC - parse url ref links",
+    "TODO: Dynamic contents: CEEC ??? Crawled 1500+ but found 0 ?"
+  ],
+
   "crawling": [
     {
       "row": 0,
+      "crawl": 0,
       "data": {
         "name": "Belt&Road Portal / 一带一路网",
         "domain": "https://www.yidaiyilu.gov.cn",
         "link": "/info/iList.jsp?cat_id=10122",
-        "crawl_mode_int": 0,
         "mode": "BY_PAGE",
-        "url_page_string": "cur_page",
-        "max_page": 29,
+        "crawl_mode_int": 0,
+        "page_url_prefix": "&cur_page=",
+        "page_url_suffix": "",
+        "href_pattern": "attach",
+        "url_xpath": "//ul[@class='commonList_dot']/li/a",
+        "title_xpath": "//div/h1[@class='main_content_title']",
+        "document_xpath": "//div/div/p",
+        "min_page": 1,
+        "max_page": 6,
+        "max_date": null,
+        "last_crawl": "Feb 25"
+      }
+    },
+    {
+      "row": 1,
+      "crawl": 0,
+      "data": {
+        "name": "中国华能集团有限公司",
+        "domain": "http://www.chng.com.cn/",
+        "link": "",
+        "crawl_mode_int": -1,
+        "mode": "BY_PAGE",
+        "page_url_prefix": "",
+        "max_page": -1,
         "max_date": null
+      }
+    },
+    {
+      "row": 2,
+      "crawl": 0,
+      "data": {
+        "name": "中国华电集团有限公司",
+        "domain": "http://www.chd.com.cn/",
+        "link": "",
+        "crawl_mode_int": -1,
+        "mode": "BY_PAGE",
+        "page_url_prefix": "",
+        "max_page": -1,
+        "max_date": null
+      }
+    },
+    {
+      "row": 3,
+      "crawl": 0,
+      "data": {
+        "name": "China Development Bank / 国家开发银行",
+        "domain": "http://www.cdb.com.cn",
+        "link": "???",
+        "mode": "BY_PAGE",
+        "crawl_mode_int": -1,
+        "page_url_prefix": "_",
+        "url_xpath": "",
+        "title_xpath": "",
+        "document_xpath": "",
+        "max_page": 1,
+        "max_date": null,
+        "last_crawl": "2018-08-01"
+      }
+    },
+    {
+      "row": 4,
+      "crawl": 0,
+      "data": {
+        "name": "Sinosure / 中国进出口信用保险公司",
+        "domain": "http://www.sinosure.com.cn",
+        "link": "/xwzx/xbdt/default",
+        "mode": "BY_PAGE",
+        "crawl_mode_int": 0,
+        "page_url_prefix": "_",
+        "page_url_suffix": ".shtml",
+        "href_pattern": "attach",
+        "url_xpath": "//div[@class='campus']/ul/li/a",
+        "title_xpath": "//div/div[@class='voide-content']/h2",
+        "document_xpath": "//div/div/p",
+        "min_page": 2,
+        "max_page": 2,
+        "max_date": null,
+        "last_crawl": ""
+      }
+    },
+    {
+      "row": 5,
+      "crawl": 0,
+      "data": {
+        "name": "Shanghai Electric Group Co Ltd",
+        "domain": "www.shanghaipower.com ???",
+        "link": "/xwzx/gsyw/index",
+        "mode": "BY_PAGE",
+        "crawl_mode_int": -1,
+        "page_url_prefix": "&&p=",
+        "page_url_suffix": "",
+        "url_xpath": "//body/table/tr/td/table/tr/td/table/tr/td/table/tr/td/table/tr/td/div/table/tr/td/a",
+        "href_pattern": "True",
+        "title_xpath": "",
+        "document_xpath": "",
+        "min_page": 5,
+        "max_page": 5,
+        "max_date": null,
+        "last_crawl": ""
+      }
+    },
+    {
+      "row": 6,
+      "crawl": 0,
+      "data": {
+        "name": "中国电力建设集团 / Power Construction Corporation of China",
+        "domain": "http://www.powerchina.cn",
+        "link": "/jsearch/search.do?appid=1&as_eq=&as_oq=&as_q=燃煤&ck=x&colid=&createdate=2018-03-07&createdate=2019-03-08&doctype=&pagemode=result&pg=50&pos=&style=1&webid=&x=34&y=7",
+        "mode": "BY_PAGE",
+        "crawl_mode_int": 0,
+        "page_url_prefix": "&&p=",
+        "page_url_suffix": "",
+        "url_xpath": "//tr/td[@class='jsearchblue']/a",
+        "href_pattern": "contain_domain",
+        "title_xpath": "//tbody/tr/td[@class='title']",
+        "document_xpath": "//div[@class='dj_atc']/table/tr/td/div[@class='zwys']/p",
+        "min_page": 1,
+        "max_page": 7,
+        "max_date": null,
+        "last_crawl": "2019-03-07"
+      }
+    },
+    {
+      "row": 7,
+      "crawl": 0,
+      "data": {
+        "name": "中国能源建设股份有限公司 / China Energy Engineering Corp",
+        "domain": "http://www.ceec.net.cn",
+        "link": [
+          {
+            "url": "jsearch/search.do?appid=1&ck=x&pagemode=result&pos=title%2Ccontent&q=煤电&style=1&webid=40",
+            "min_page": 1,
+            "max_page": 31
+          },
+          {
+            "url":"jsearch/search.do?appid=1&ck=x&pagemode=result&pos=title%2Ccontent&q=燃煤&style=1&webid=40",
+            "min_page": 1,
+            "max_page": 31
+          }
+        ],
+        "mode": "BY_PAGE",
+        "crawl_mode_int": 0,
+        "page_url_prefix": "&&p=",
+        "page_url_suffix": "",
+        "url_xpath": "//tr/td[@class='jsearchblue']/a",
+        "href_pattern": "contain_domain",
+        "title_xpath": "???",
+        "document_xpath": "",
+        "max_date": null,
+        "last_crawl": ""
+      }
+    },
+    {
+      "row": 8,
+      "crawl": 0,
+      "data": {
+        "name": "国家能源集团 / China Energy Investment Corp",
+        "domain": "http://www.ceic.com/wwsearch/",
+        "link": [
+          {
+            "url":"s?q=1&qt=煤电&pageSize=10&sort=dateDesc&database=all",
+            "min_page": 1,
+            "max_page": 100
+          },
+          {
+            "url":"s?q=1&qt=燃煤&pageSize=10&sort=dateDesc&database=all",
+            "min_page": 1,
+            "max_page": 51
+          }
+        ],
+        "mode": "BY_PAGE",
+        "crawl_mode_int": 1,
+        "page_url_prefix": "&page=",
+        "page_url_suffix": "#gettop",
+        "url_xpath": "//div[@class='center_side']/div[@class='list']/ul/li/h1/a",
+        "title_xpath": "//div[@class='content_l']/h1",
+        "document_xpath": "//div[@class='content_l']/p",
+        "max_date": null,
+        "last_crawl": ""
+      }
+    },
+    {
+      "row": 9,
+      "crawl": 0,
+      "data": {
+        "name": "中国机械进出口集团有限公司 / China National Machinery Import and Export Corp",
+        "domain": "http://www.cmc.com.cn",
+        "link": "/news.aspx?partnodeid=14",
+        "mode": "BY_PAGE",
+        "crawl_mode_int": 0,
+        "page_url_prefix": "&pagenum=",
+        "page_url_suffix": "",
+        "url_xpath": "//div[@class='z-jhnb']/dl/dd/a",
+        "href_pattern": "contain_domain",
+        "title_xpath": "//div/div/span[@class='bty']",
+        "document_xpath": "//div/div/span[@class='ltContent']/p",
+        "min_page": 5,
+        "max_page": 5,
+        "max_date": null,
+        "last_crawl": "2019-03-07"
+      }
+    },
+    {
+      "row": 10,
+      "crawl": 1,
+      "data": {
+        "name": "中国南方电网 / China Southern Power Grid",
+        "domain": "http://www.csg.cn",
+        "link": [
+          {
+            "url":"/xwzx/2018/gsyw",
+            "min_page": 1,
+            "max_page": 17
+          },
+          {
+            "url":"/xwzx/2019/gsyw",
+            "min_page": 1,
+            "max_page": 6
+          }
+        ],
+        "mode": "BY_PAGE",
+        "crawl_mode_int": 1,
+        "page_url_prefix": "/index_",
+        "page_url_suffix": ".html",
+        "href_pattern": "relative",
+        "url_xpath": "//div[@class='list-news']/ul/li/h2/a",
+        "title_xpath": "//div[@class='con-right']/div/h2",
+        "document_xpath": "//div[@id='ArtText']/div/p",
+        "max_date": null,
+        "last_crawl": "2019-03-07"
       }
     }
   ],
+  "crawled": [
+
+  ],
   "queued": [
     {
-      "China Huaneng Corp": ""
+
     },
+    "China Huaneng Corp",
     "China Huadian Corp",
-    "Power Construction Corporation of China",
     "Shanghai Electric Group Co Ltd",
-    "China Energy Investment Corp",
-    "Harbin Electric Corp",
     "China Energy Engineering Corp",
-    "China National Machinery Import and Export Corp",
+
+    "Harbin Electric Corp",
+
     "China Power International Holding",
     "China Machinery Engineering Corp",
     "SEPCO",
@@ -59,13 +295,13 @@
     "GCL-Poly",
     "China Hongqiao Group Ltd",
     "Wuxi Huaguang Electric Power Engineering",
-    "China-Africa Development Fund",
     "Export-Import Bank of China",
-    "Sinosure",
-    "Industrial & Commercial Bank of China",
-    "China Silk Road Fund",
-    "China Development Bank",
     "China Construction Bank",
-    "Bank of China"
+    "Bank of China",
+    "Sinosure > 新闻中心 > 经贸资讯 > PDFs"
+  ],
+  "rejected": [
+    "China Silk Road Fund",
+    "Industrial & Commercial Bank of China"
   ]
 }
