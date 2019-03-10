@@ -1,9 +1,10 @@
 {
   "_comments": [
     "TODO: 国开行 - crawler",
-    "TODO： 中国电力建设集团 - new mode for crawl search results",
     "TODO: CEIC - parse url ref links",
-    "TODO: Dynamic contents: CEEC ??? Crawled 1500+ but found 0 ?"
+    "TODO: Dynamic contents: CEEC ??? Crawled 1500+ but found 0 ?",
+    "TODO: 中国机械进出口集团有限公司: cannot parse form contents",
+    "TODO 中国电力建设工程咨询有限公司 搜索系统"
   ],
 
   "crawling": [
@@ -209,7 +210,7 @@
         "page_url_suffix": "",
         "url_xpath": "//div[@class='z-jhnb']/dl/dd/a",
         "href_pattern": "contain_domain",
-        "title_xpath": "//div/div/span[@class='bty']",
+        "title_xpath": "//div[@class='z-fgvw']/div/span[@class='bty']",
         "document_xpath": "//div/div/span[@class='ltContent']/p",
         "min_page": 5,
         "max_page": 5,
@@ -219,7 +220,7 @@
     },
     {
       "row": 10,
-      "crawl": 1,
+      "crawl": 0,
       "data": {
         "name": "中国南方电网 / China Southern Power Grid",
         "domain": "http://www.csg.cn",
@@ -246,10 +247,178 @@
         "max_date": null,
         "last_crawl": "2019-03-07"
       }
+    },
+    {
+      "row": 11,
+      "crawl": 0,
+      "data": {
+        "name": "中国电力建设工程咨询有限公司 搜索系统 / China Power Construction Engineering Consulting Co. LTP",
+        "domain": "http://www.cpcec.ceec.net.cn/",
+        "link": [
+          {
+            "url":"",
+            "min_page": 1,
+            "max_page": 17
+          },
+          {
+            "url":"",
+            "min_page": 1,
+            "max_page": 6
+          }
+        ],
+        "mode": "BY_PAGE",
+        "crawl_mode_int": 1,
+        "page_url_prefix": "",
+        "page_url_suffix": "",
+        "href_pattern": "relative",
+        "url_xpath": "//table/tbody/tr/td[@class='jsearchblue']/a",
+        "title_xpath": "",
+        "document_xpath": "",
+        "max_date": null,
+        "last_crawl": "2019-03-07"
+      }
+    },
+    {
+      "row": 12,
+      "crawl": 0,
+      "data": {
+        "name": "中国交建 / China Communication Construction Corp",
+        "domain": "http://www.ccccltd.cn",
+        "link": [
+          {
+            "url":"/news/gsyw/index",
+            "min_page": 1,
+            "max_page": 18
+          },
+          {
+            "url":"/news/jcxw/jx/index",
+            "min_page": 1,
+            "max_page": 22
+          },
+          {
+            "url":"/news/jcxw/zhxw/index",
+            "min_page": 1,
+            "max_page": 8
+          },
+          {
+            "url":"/news/jcxw/sdbd/index",
+            "min_page": 1,
+            "max_page": 3
+          },
+          {
+            "url":"/news/jcxw/gd/index",
+            "min_page": 1,
+            "max_page": 1
+          },
+          {
+            "url":"/news/jcxw/rw/index",
+            "min_page": 1,
+            "max_page": 2
+          },
+          {
+            "url":"/news/rdsm/index",
+            "min_page": 1,
+            "max_page": 7
+          },
+          {
+            "url":"/news/mtjj/index",
+            "min_page": 1,
+            "max_page": 11
+          },
+          {
+            "url":"/news/gzzs/index",
+            "min_page": 1,
+            "max_page": 6
+          },
+          {
+            "url":"/news/hyzx/index",
+            "min_page": 1,
+            "max_page": 11
+          },
+          {
+            "url":"/news/hyzx/gsgg",
+            "min_page": 1,
+            "max_page": 1
+          }
+
+        ],
+        "mode": "BY_PAGE",
+        "crawl_mode_int": 2,
+        "page_url_prefix": "_",
+        "page_url_suffix": ".html",
+        "href_pattern": "relative",
+        "url_xpath": "//div[@class='scy_zbyw']/ul/li/a",
+        "title_xpath": "",
+        "document_xpath": "",
+        "max_date": null,
+        "last_crawl": "2019-03-09"
+      }
+    },
+    {
+      "row": 12,
+      "crawl": 0,
+      "data": {
+        "name": "华西能源 / China Western Power Industrial Co Ltd",
+        "domain": "http://www.cwpc.com.cn",
+        "link": [
+          {
+            "url":"/Article/Index/id/119/",
+            "min_page": 1,
+            "max_page": 4
+          }
+
+        ],
+        "mode": "BY_PAGE",
+        "crawl_mode_int": 1,
+        "page_url_prefix": "p/",
+        "page_url_suffix": ".html",
+        "href_pattern": "attached",
+        "url_xpath": "//div/div/div[@class='newslist_title']/a",
+        "title_xpath": "//div[@class='article']/div/div[@class='article_title']",
+        "document_xpath": "//div[@class='article']/div[@class='article_content']//span",
+        "max_date": null,
+        "last_crawl": "2019-03-09"
+      }
+    },
+    {
+      "row": 13,
+      "crawl": 1,
+      "data": {
+        "name": "国家电力投资集团有限公司 / State Power Investment Corp",
+        "domain": "http://www.spic.com.cn",
+        "link": [
+          {
+            "url":"/search/search?channelid=227243&searchword=%E7%87%83%E7%85%A4&keyword=%E7%87%83%E7%85%A4&orderby=-docreltime&perpage=10&outlinepage=10&searchscope=&timescope=&timescopecolumn=&orderby=-docreltime&andsen=&total=&orsen=&exclude=",
+            "min_page": 1,
+            "max_page": 21
+          },
+          {
+            "url":"/search/search?channelid=227243&searchword=%E7%85%A4%E7%94%B5&keyword=%E7%85%A4%E7%94%B5&orderby=-docreltime&perpage=10&outlinepage=10&searchscope=&timescope=&timescopecolumn=&orderby=-docreltime&andsen=&total=&orsen=&exclude=",
+            "min_page": 1,
+            "max_page": 16
+          }
+        ],
+        "mode": "BY_PAGE",
+        "crawl_mode_int": 2,
+        "page_url_prefix": "&page=",
+        "page_url_suffix": "",
+        "href_pattern": "contain_domain",
+        "url_xpath": "//div[@class='fl']/ul/li/a",
+        "title_xpath": "//div/div[@class='textcontent']/div[@class='articleTitle']",
+        "document_xpath": "//div/div[@class='TRS_Editor']//*",
+        "max_date": null,
+        "encoding": "GB2312",
+        "last_crawl": "2019-03-09"
+      }
     }
+
   ],
   "crawled": [
-
+    {"comment": "Following companies are likely to be cancelled for crawling"},
+    "Weiqu Energy Investments",
+    "Erdos Hongjun Electric Power",
+    "Fujian Zhongde Energy",
+    "Yunnan Linkun Investment Group"
   ],
   "queued": [
     {
@@ -259,11 +428,11 @@
     "China Huadian Corp",
     "Shanghai Electric Group Co Ltd",
     "China Energy Engineering Corp",
+    "China Machinery Engineering Corp",
+
 
     "Harbin Electric Corp",
-
     "China Power International Holding",
-    "China Machinery Engineering Corp",
     "SEPCO",
     "Zhejiang Jindun Holding Group Co Ltd",
     "Sichuan Provincial Investment Group Co Ltd",
@@ -271,27 +440,20 @@
     "China Resources",
     "STG Development Group",
     "State Power Investment Corp",
-    "China Southern Power Grid",
     "China Power Engineering Consulting Corp",
     "China Datang Corp",
     "State Grid Corporation of China",
     "Sichuan No 3 Electric Power Construction Co",
     "Sichuan Electric Power Design Institute",
     "Shandong Electric Power Engineering Consulting Institute Corp Ltd",
-    "Erdos Hongjun Electric Power",
     "Power China Resources",
-    "Weiqu Energy Investments",
-    "Shenzhen Energy Group Co Ltd",
-    "Fujian Zhongde Energy",
-    "Yunnan Linkun Investment Group",
     "Sichuan Hongda Group",
     "China Africa Sunlight Energy Pvt Ltd",
     "Dongfang Electric Corp",
     "Sinohydro",
     "Hubei Hongyuan Power Engineering Co Ltd",
     "Tianjin Energy Resources Ltd",
-    "China Communications Construction Group",
-    "China Western Power Industrial Co Ltd",
+
     "GCL-Poly",
     "China Hongqiao Group Ltd",
     "Wuxi Huaguang Electric Power Engineering",
@@ -302,6 +464,8 @@
   ],
   "rejected": [
     "China Silk Road Fund",
-    "Industrial & Commercial Bank of China"
+    "Industrial & Commercial Bank of China",
+    "Shenzhen Energy Group Co Ltd",
+    "China-Africa Development Fund"
   ]
 }

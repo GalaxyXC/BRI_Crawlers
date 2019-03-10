@@ -32,19 +32,6 @@ def _get_urls_from_page0(page_url, url_xpath):
 
 
 
-def _get_urls_from_page0(page_url, url_xpath):
-    # parsing YiDaiYiLuWang's news list
-    html = get_html_from_url(page_url)
-    if not html:
-        return []
-
-    root = etree.HTML(html)
-    url_elements = root.xpath(url_xpath)
-    return [elem.get("href") for elem in url_elements]
-
-
-
-
 def get_post_date_from_document(document, mode):
         """
         Calls post_date_from_document(*) from utils.py
@@ -54,15 +41,21 @@ def get_post_date_from_document(document, mode):
         pass
 
 
-def get_html_from_url(url):
+def get_html_from_url(url, args=None):
     r = requests.get(url=url, headers={'user-agent':USER_AGENT}, params=None)
     if r.status_code == 200:
-        r.encoding = 'UTF-8'
+        if args is not None and "encoding" in args:
+            r.encoding = args["encoding"]
+        else:
+            r.encoding = 'UTF-8'
+
         return r.text
     else:
         return ""
 
+
 def remove_domain_prefix(path, file, domain):
+    # in case of duplicated domain, remove one from beginning
     with open(path+file, 'r') as f:
         text = f.read()
     lines = text.split('\n')
@@ -73,7 +66,9 @@ def remove_domain_prefix(path, file, domain):
     with open(path+"new_"+file, 'w') as f:
         f.write(new_text)
 
+
 def merge_urls(file1, file2):
+    # merge two files and remove duplicated lines
     with open(file1, 'r') as f:
         text = f.read()
     lines1 = text.split('\n')
@@ -84,6 +79,7 @@ def merge_urls(file1, file2):
     unique.update(lines2)
     with open("unique_urls.txt", 'w') as f:
         f.write("\n".join(unique))
+
 
 def add_domain_by_year(file, year_prefix, year_suffix):
     with open(file, 'r') as f:
@@ -98,14 +94,26 @@ def add_domain_by_year(file, year_prefix, year_suffix):
     with open("crawler/new_urls.txt", 'w') as f:
         f.write("\n".join(ret))
 
+
 def log(text):
-    with open("log.txt", 'a') as f:
+    # write same coutent to log then print on screen
+    with open("log.txt", 'a', encoding='utf-8') as f:
         f.write(text)
-    print(text)
+    print(text, end='')
 
 
+def remove_html_tags(text):
+    # remove all html <> tags, style config's, white spaces
+    style_pattern = re.compile("<style>[\w\s/%&.,;:\#=_{}!?\"\'\-\(\)\[\]\*]+</style>")
+    tag_pattern = re.compile("<[\w\s/%&.,;:\#=_{}!?\"\'\-\(\)\[\]\*]+>")
+    whitespaces = re.compile("[\s]+")
+    style_removed = re.sub(style_pattern, '', text)
+    plaintext = re.sub(tag_pattern, '', style_removed)
+    return re.sub(whitespaces, '', plaintext)
 
 
-
-def parse_year(file):
-    return
+def string_to_file(text_string):
+    # output to local files for better readability
+    with open("crawler/temp_text.txt", 'w', encoding='UTF-8') as f:
+        f.write(text_string)
+    print("String written in crawler/temp_text.txt")
