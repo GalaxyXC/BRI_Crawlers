@@ -30,12 +30,16 @@ class BeltRoadSpider:
         if mode_int < 0:
             return ""
 
+        # naive, nested for loop, iterating through each index page, then iter. thru each url
         if mode_int == 0:
             return self._crawl0(args)
 
+        # generate urls job queue from index page; then consume each url by crawling with xpath
         if mode_int == 1:
             return self._crawl1(args)
 
+        # generate urls job queue from index page;
+        # then consume each url by crawling & remove all html tags and whitespace char's
         if mode_int == 2:
             return self._crawl2(args)
 
@@ -133,7 +137,7 @@ class BeltRoadSpider:
         """
 
         name, domain, links = args["name"], args["domain"], args["link"]
-        utils.log(f"Mode 1: Crawling {name}({domain}) with xpath (title | document); {dt.datetime.now}")
+        utils.log(f"Mode 1: Crawling {name}({domain}) with xpath (title | document); {dt.datetime.now()}\n")
 
         # Create url queues
         if "read_from_file" not in args:
@@ -144,7 +148,6 @@ class BeltRoadSpider:
 
         # Consume url queues
         return self.consume_jobs_xpath(jobs, args)
-
 
     def _crawl2(self, args):
         """
@@ -159,7 +162,7 @@ class BeltRoadSpider:
         """
 
         name, domain, links = args["name"], args["domain"], args["link"]
-        utils.log(f"Mode 1: Crawling {name}({domain}) with xpath (title | document); {dt.datetime.now()}")
+        utils.log(f"Mode 2: Crawling {name}({domain}) with xpath (title | document); {dt.datetime.now()}")
 
         # Create url queues
         if "read_from_file" not in args:
@@ -225,22 +228,35 @@ class BeltRoadSpider:
 
         urls_to_return = []
         count = 0
+        fail_count = 0
         for document_url in url_queue:
             count += 1
             utils.log(f"[{count}] Requesting: {document_url}\n")
-            document_html = utils.get_html_from_url(document_url, args)
+
+            # Request for html using document_url
+            try:
+                document_html = utils.get_html_from_url(document_url, args)
+            except Exception as request_excpetion:
+                fail_count += 1
+                if fail_count > len(url_queue)*0.05:
+                    raise request_excpetion
+                else:
+                    continue
+
             if not document_html:
                 utils.log(f"\n LOG: Fail to process: {domain + document_url}\n")
                 continue
 
 
             root = etree.HTML(document_html)
+            # parse title
             try:
                 title = root.xpath(title_xpath)[0].text
             except Exception as et:
                 utils.log(f"\n LOG: Exception: {et} while parsing Title {domain + document_url}.\n")
                 title = ""
 
+            # parse document string
             try:
                 document_text = root.xpath(document_xpath)
                 document_string = " ".join([e.text for e in document_text if e.text])
@@ -251,7 +267,7 @@ class BeltRoadSpider:
             found_log = "NOT "
             result, matched = self._contains_all_keywords(title + document_string)
             if result:
-                urls_to_return.append(document_url)
+                urls_to_return.append(f"{document_url} | {matched}")
                 # urls_to_return.append(document_url)
                 # self.urls_to_return.append(domain+document_url)
                 found_log = ""
@@ -262,6 +278,8 @@ class BeltRoadSpider:
             if count % 25 == 0:
                 utils.log(f"LOG: Crawled: {count} pages(Current: {document_url})\n {dt.datetime.now()}\n")
                 utils.log("\n".join(urls_to_return))
+
+        return urls_to_return
 
     def consume_jobs_all_text(self, url_queue, args):
         urls_to_return = []
@@ -277,7 +295,7 @@ class BeltRoadSpider:
             if result:
                 urls_to_return.append(f"{document_url} | {matched}")
                 found_log = ""
-            utils.log(f"Processed: {plain_text[:12]}(length: {len(plain_text)}); keyword {found_log}found.{matched} \n")
+            utils.log(f"Processed: {plain_text[:12]}..(length:{len(plain_text)}); keyword {found_log}found.{matched}\n")
 
             if count % 25 == 0:
                 utils.log(f"LOG: Crawled: {count} pages(Current: {document_url})\n {dt.datetime.now()}\n")
@@ -321,14 +339,15 @@ if __name__ == '__main__':
             continue
 
         params = website["data"]
+
         # Override with external job queue
-        # params["read_from_file"] = "data/中国南方电网_job_urls.txt"
+        # params["read_from_file"] = "data/四川省投资集团有限责任公司_job_urls.txt"
         # Override when read urls from file
         # params['href_pattern'] = "contain_domain"
+
         urls = spider.crawl(mode_int=params["crawl_mode_int"], args=params)
 
-        with open("data/" + params["name"].split(" ")[0] + "output.txt", "w", encoding="utf-8") as f:
+        with open("data/" + params["name"].split(" / ")[0] + "output.txt", "w", encoding="utf-8") as f:
             f.write("\n".join(urls))
 
     utils.log(f"LOG: Crawled {len(urls)} links that contains ALL keywords in {CHECKLIST}. ({dt.datetime.now()})\n")
-

@@ -382,7 +382,7 @@
     },
     {
       "row": 13,
-      "crawl": 1,
+      "crawl": 0,
       "data": {
         "name": "国家电力投资集团有限公司 / State Power Investment Corp",
         "domain": "http://www.spic.com.cn",
@@ -410,15 +410,133 @@
         "encoding": "GB2312",
         "last_crawl": "2019-03-09"
       }
+    },
+    {
+      "row": 13,
+      "crawl": 0,
+      "data": {
+        "name": " 中国机械设备工程股份有限公司(part 1,2 of 3) / China Machinery Engineering Corp",
+        "domain": "http://www.cmec.com",
+        "link": [
+          {
+            "url":"/xwzx/gsxw/index",
+            "min_page": 1,
+            "max_page": 1
+          },
+          {
+            "url":"/xwzx/mtbd/index",
+            "min_page": 1,
+            "max_page": 1
+          }
+        ],
+        "mode": "BY_PAGE",
+        "crawl_mode_int": 1,
+        "page_url_prefix": "_",
+        "page_url_suffix": ".html",
+        "href_pattern": "relative",
+        "url_xpath": "//div/ul/li/a[@class='tupian']",
+        "title_xpath": "//div/div[@class='xwxq']/h2",
+        "document_xpath": "//div[@class='TRS_Editor']/div",
+        "max_date": null,
+        "last_crawl": "2019-03-10"
+      }
+    },
+    {
+      "row": 14,
+      "crawl": 0,
+      "data": {
+        "name": "中国机械设备工程股份有限公司(part 3 of 3) / China Machinery Engineering Corp",
+        "domain": "http://www.cmec.com",
+        "link": [
+          {
+            "url":"/xwzx/ztlm/index",
+            "min_page": 1,
+            "max_page": 2
+          }
+        ],
+        "mode": "BY_PAGE",
+        "crawl_mode_int": 1,
+        "page_url_prefix": "_",
+        "page_url_suffix": ".html",
+        "href_pattern": "relative",
+        "url_xpath": "//ul/li/div[@class='gu_txt clearfix']/a",
+        "title_xpath": "//div/div[@class='xwxq']/h2",
+        "document_xpath": "//div[@class='TRS_Editor']/div",
+        "last_crawl": "2019-03-10"
+      }
+    },
+    {
+      "row": 14,
+      "crawl": 0,
+      "data": {
+        "name": "四川省投资集团有限责任公司 / Sichuan Provincial Investment Group Co Ltd",
+        "domain": "http://www.invest.com.cn",
+        "link": [
+          {
+            "url":"/news/group-news/index",
+            "min_page": 1,
+            "max_page": 19
+          },
+          {
+            "url":"/news/general-news/index",
+            "min_page": 1,
+            "max_page": 16
+          },
+          {
+            "url":"/news/media-news/index",
+            "min_page": 1,
+            "max_page": 2
+          },
+          {
+            "url":"/news/member-news/index",
+            "min_page": 1,
+            "max_page": 43
+          }
+        ],
+        "mode": "BY_PAGE",
+        "crawl_mode_int": 1,
+        "page_url_prefix": "_",
+        "page_url_suffix": ".html",
+        "href_pattern": "attached",
+        "url_xpath": "//div[@class='news-left']/div/div/h2/a | //div[@class='news-left']/div/ul/li/a",
+        "title_xpath": "//div/div[@class='title']/h1/span",
+        "document_xpath": "//div[@class='content']/p",
+        "last_crawl": "2019-03-10"
+      }
+    },
+    {
+      "row": 15,
+      "crawl": 1,
+      "data": {
+        "name": "华润集团有限公司 / China Resources",
+        "domain": "http://winfo.crc.com.cn",
+        "link": [
+          {
+            "url":"/news/crc_dynamic/index",
+            "min_page": 1,
+            "max_page": 8
+          }
+        ],
+        "mode": "BY_PAGE",
+        "crawl_mode_int": 1,
+        "page_url_prefix": "_",
+        "page_url_suffix": ".htm",
+        "href_pattern": "relative",
+        "url_xpath": "//div[@class='newslist']/ul/li/div/h3/a",
+        "title_xpath": "//div[@class='newsContent']/div/h1/",
+        "document_xpath": "//div[@class='text']/div//p | //div[@class='text']/div//span",
+        "last_crawl": "2019-03-10"
+      }
     }
-
   ],
   "crawled": [
-    {"comment": "Following companies are likely to be cancelled for crawling"},
+    {"comment0": "Following companies are likely to be cancelled for crawling"},
     "Weiqu Energy Investments",
     "Erdos Hongjun Electric Power",
     "Fujian Zhongde Energy",
-    "Yunnan Linkun Investment Group"
+    "Yunnan Linkun Investment Group",
+    {"comment1": "Following companies have only a few news"},
+    "Harbin Electric Corp"
   ],
   "queued": [
     {
@@ -430,8 +548,6 @@
     "China Energy Engineering Corp",
     "China Machinery Engineering Corp",
 
-
-    "Harbin Electric Corp",
     "China Power International Holding",
     "SEPCO",
     "Zhejiang Jindun Holding Group Co Ltd",
